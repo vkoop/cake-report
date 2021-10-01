@@ -8,7 +8,7 @@ class MyApp : QuarkusApplication {
         val fileName = args[0]!!
         val outputFile = args[1]!!
 
-        val filterTypes = args[2]?.split(",")?.toList() ?: listOf()
+        val filterTypes = args.getOrNull(2)?.split(",")?.toList() ?: listOf()
 
         var table = File(fileName).readLines()
             .toList()
