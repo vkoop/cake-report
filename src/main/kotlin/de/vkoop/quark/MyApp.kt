@@ -1,7 +1,20 @@
 package de.vkoop.quark
 
+import de.vkoop.quark.TransaktionTypes.Companion.FREEZER_STAKING_BONUS
+import de.vkoop.quark.TransaktionTypes.Companion.LIQUIDITY_MINING_REWARD_BTC_DFI
+import de.vkoop.quark.TransaktionTypes.Companion.STAKING_REWARD
+import de.vkoop.quark.TransaktionTypes.Companion.TEN_YEARS_FREEZER_REWARD
 import io.quarkus.runtime.QuarkusApplication
 import java.io.File
+
+class TransaktionTypes {
+    companion object {
+        const val FREEZER_STAKING_BONUS = "Freezer staking bonus"
+        const val TEN_YEARS_FREEZER_REWARD = "10 years freezer reward"
+        const val STAKING_REWARD ="Staking reward"
+        const val LIQUIDITY_MINING_REWARD_BTC_DFI = "Liquidity mining reward BTC-DFI"
+    }
+}
 
 class MyApp : QuarkusApplication {
     override fun run(vararg args: String?): Int {
@@ -28,12 +41,12 @@ class MyApp : QuarkusApplication {
             it.type
         }
 
-        val freezerRewards = byType.getOrDefault("Freezer staking bonus", emptyList())
-        val freezer10Rewards = byType.getOrDefault("10 years freezer reward", emptyList())
+        val freezerRewards = byType.getOrDefault(FREEZER_STAKING_BONUS, emptyList())
+        val freezer10Rewards = byType.getOrDefault(TEN_YEARS_FREEZER_REWARD, emptyList())
 
 
-        val stakingRewards = byType.getOrDefault("Staking reward", emptyList())
-        val liqudityMiningRewards = byType.getOrDefault("Liquidity mining reward BTC-DFI", emptyList())
+        val stakingRewards = byType.getOrDefault(STAKING_REWARD, emptyList())
+        val liqudityMiningRewards = byType.getOrDefault(LIQUIDITY_MINING_REWARD_BTC_DFI, emptyList())
         val otherEntries = table - freezerRewards - stakingRewards - liqudityMiningRewards - freezer10Rewards
 
 
@@ -43,6 +56,7 @@ class MyApp : QuarkusApplication {
 
 
         File(outputFile).printWriter().use { out ->
+            // add headerline
             out.println(File(fileName).readLines()[0])
 
             csvLines.forEach {
@@ -116,6 +130,6 @@ private fun processStaking(table: List<CsvLine>): List<String> {
             }
         }
         .values
-        .map { it.copy(type = "Staking reward", transactionId = "") }
+        .map { it.copy(type = STAKING_REWARD, transactionId = "") }
         .map { it.toCsv() }
 }

@@ -13,18 +13,17 @@ data class CsvLine(
     val currency: String,
     val amountFiat: BigDecimal,
     val fiatCurrency: String,
-    val x: String,
-    val y: String,
     val transactionId: String,
-    val a: String
+    val withdrawalAddress: String,
+    val reference: String,
+    val relatedReferenceId: String
 ) {
 
     fun toCsv(): String {
-        val decimalFormat = DecimalFormat.getInstance(Locale.GERMAN)
-        val amountString = decimalFormat.format(this.amoumt).replace(".", ",")
-        val amountFiatString = decimalFormat.format(this.amountFiat).replace(".", ",")
+        val amountString = this.amoumt.toPlainString()//.replace(".", ",")
+        val amountFiatString = amountFiat.toPlainString()//.replace(".", ",")
 
-        return """"$date","$type","$amountString","$currency","$amountFiatString","$fiatCurrency","$x","$y","$transactionId","$a""""
+        return """"$date","$type","$amountString","$currency","$amountFiatString","$fiatCurrency","$reference","$withdrawalAddress","$transactionId","$relatedReferenceId""""
     }
 
     companion object {
