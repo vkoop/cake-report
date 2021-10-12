@@ -23,7 +23,7 @@ data class CsvLine(
         val amountString = this.amoumt.toPlainString()//.replace(".", ",")
         val amountFiatString = amountFiat.toPlainString()//.replace(".", ",")
 
-        return """"$date","$type","$amountString","$currency","$amountFiatString","$fiatCurrency","$reference","$withdrawalAddress","$transactionId","$relatedReferenceId""""
+        return """"$date","$type","$amountString","$currency","$amountFiatString","$fiatCurrency","$withdrawalAddress","$transactionId","$reference","$relatedReferenceId""""
     }
 
     companion object {
