@@ -6,6 +6,7 @@ import de.vkoop.quark.TransaktionTypes.Companion.STAKING_REWARD
 import de.vkoop.quark.TransaktionTypes.Companion.TEN_YEARS_FREEZER_REWARD
 import io.quarkus.runtime.QuarkusApplication
 import java.io.File
+import kotlin.system.exitProcess
 
 class TransaktionTypes {
     companion object {
@@ -18,6 +19,11 @@ class TransaktionTypes {
 
 class MyApp : QuarkusApplication {
     override fun run(vararg args: String?): Int {
+        if(args.size != 2){
+            System.err.println("Missing program arguments")
+            exitProcess(1);
+        }
+
         val fileName = args[0]!!
         val outputFile = args[1]!!
 
@@ -59,9 +65,9 @@ class MyApp : QuarkusApplication {
             // add headerline
             out.println(File(fileName).readLines()[0])
 
-            csvLines.forEach {
-                out.println(it)
-            }
+            // add line break to all but the last line
+            (csvLines.dropLast(1).map { it + System.lineSeparator() } + csvLines.last())
+                .forEach { out.print(it) }
         }
 
         return 0;
