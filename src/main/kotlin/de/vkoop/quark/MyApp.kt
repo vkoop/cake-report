@@ -19,7 +19,7 @@ class TransaktionTypes {
 
 class MyApp : QuarkusApplication {
     override fun run(vararg args: String?): Int {
-        if(args.size != 2){
+        if(args.size < 2){
             System.err.println("Missing program arguments")
             exitProcess(1);
         }
