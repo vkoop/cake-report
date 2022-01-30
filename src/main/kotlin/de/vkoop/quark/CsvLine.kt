@@ -1,10 +1,8 @@
 package de.vkoop.quark
 
 import java.math.BigDecimal
-import java.text.DecimalFormat
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
-import java.util.*
 
 data class CsvLine(
     val date: ZonedDateTime,
