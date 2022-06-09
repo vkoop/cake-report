@@ -1,7 +1,7 @@
 plugins {
     id 'io.quarkus'
-    id "org.jetbrains.kotlin.jvm" version "1.6.21"
-    id "org.jetbrains.kotlin.plugin.allopen" version "1.6.21"
+    id "org.jetbrains.kotlin.jvm" version "1.7.0"
+    id "org.jetbrains.kotlin.plugin.allopen" version "1.7.0"
 
     id("com.github.ben-manes.versions") version "0.42.0"
 
@@ -13,10 +13,10 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.21'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+
     implementation 'io.quarkus:quarkus-kotlin'
     implementation 'io.quarkus:quarkus-arc'
-
 
     implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
     testImplementation 'io.quarkus:quarkus-junit5'
