@@ -15,6 +15,8 @@ repositories {
 dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.21'
     implementation 'io.quarkus:quarkus-kotlin'
+    implementation 'io.quarkus:quarkus-arc'
+
 
     implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
     testImplementation 'io.quarkus:quarkus-junit5'
