@@ -12,14 +12,14 @@ class TransaktionTypes {
     companion object {
         const val FREEZER_STAKING_BONUS = "Freezer staking bonus"
         const val TEN_YEARS_FREEZER_REWARD = "10 years freezer reward"
-        const val STAKING_REWARD ="Staking reward"
+        const val STAKING_REWARD = "Staking reward"
         const val LIQUIDITY_MINING_REWARD_BTC_DFI = "Liquidity mining reward BTC-DFI"
     }
 }
 
 class MyApp : QuarkusApplication {
     override fun run(vararg args: String?): Int {
-        if(args.size < 2){
+        if (args.size < 2) {
             System.err.println("Missing program arguments")
             exitProcess(1);
         }
@@ -36,7 +36,7 @@ class MyApp : QuarkusApplication {
                 CsvLine.from(it)
             }
 
-        if(filterTypes.isNotEmpty()){
+        if (filterTypes.isNotEmpty()) {
             table = table.filter {
                 filterTypes.contains(it.type)
             }
@@ -56,9 +56,9 @@ class MyApp : QuarkusApplication {
         val otherEntries = table - freezerRewards - stakingRewards - liqudityMiningRewards - freezer10Rewards
 
 
-        val csvLines = processStaking(freezer10Rewards + freezerRewards + stakingRewards) + processLiquidtyMining(
+        val csvLines = (processStaking(freezer10Rewards + freezerRewards + stakingRewards) + processLiquidtyMining(
             liqudityMiningRewards
-        ) + processOther(otherEntries)
+        ) + otherEntries).map { it.toCsv() }
 
 
         File(outputFile).printWriter().use { out ->
@@ -74,12 +74,7 @@ class MyApp : QuarkusApplication {
     }
 }
 
-
-private fun processOther(table: List<CsvLine>): List<String> {
-    return table.map { it.toCsv() }
-}
-
-private fun processLiquidtyMining(table: List<CsvLine>): List<String> {
+private fun processLiquidtyMining(table: List<CsvLine>): List<CsvLine> {
 
     val btcLines = table.filter {
         it.currency == "BTC"
@@ -97,7 +92,6 @@ private fun processLiquidtyMining(table: List<CsvLine>): List<String> {
         }
         .values
         .map { it.copy(transactionId = "") }
-        .map { it.toCsv() }
 
     val dfiLines = table.filter {
         it.currency == "DFI"
@@ -115,14 +109,13 @@ private fun processLiquidtyMining(table: List<CsvLine>): List<String> {
         }
         .values
         .map { it.copy(transactionId = "") }
-        .map { it.toCsv() }
 
     return dfiLines + btcLines
 
 }
 
 
-private fun processStaking(table: List<CsvLine>): List<String> {
+private fun processStaking(table: List<CsvLine>): List<CsvLine> {
     return table
         .groupBy {
             it.date.toLocalDate()
@@ -137,5 +130,4 @@ private fun processStaking(table: List<CsvLine>): List<String> {
         }
         .values
         .map { it.copy(type = STAKING_REWARD, transactionId = "") }
-        .map { it.toCsv() }
 }
