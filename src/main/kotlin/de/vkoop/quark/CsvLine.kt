@@ -18,8 +18,8 @@ data class CsvLine(
 ) {
 
     fun toCsv(): String {
-        val amountString = this.amoumt.toPlainString()//.replace(".", ",")
-        val amountFiatString = amountFiat.toPlainString()//.replace(".", ",")
+        val amountString = this.amoumt.toPlainString()
+        val amountFiatString = amountFiat.toPlainString()
 
         return """"$date","$type","$amountString","$currency","$amountFiatString","$fiatCurrency","$withdrawalAddress","$transactionId","$reference","$relatedReferenceId""""
     }

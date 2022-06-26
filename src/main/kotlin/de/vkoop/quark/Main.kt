@@ -5,7 +5,7 @@ import io.quarkus.runtime.annotations.QuarkusMain
 
 
 @QuarkusMain
-class KotlinStarter {
+class Main {
     companion object {
         @JvmStatic
         fun main(args: Array<String>) {
