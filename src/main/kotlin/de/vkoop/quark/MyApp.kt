@@ -58,7 +58,9 @@ class MyApp : QuarkusApplication {
 
         val csvLines = (processStaking(freezer10Rewards + freezerRewards + stakingRewards) + processLiquidtyMining(
             liqudityMiningRewards
-        ) + otherEntries).map { it.toCsv() }
+        ) + otherEntries)
+            .sortedBy { it.date }
+            .map { it.toCsv() }
 
 
         File(outputFile).printWriter().use { out ->
