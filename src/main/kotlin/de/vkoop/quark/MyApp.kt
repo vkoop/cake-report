@@ -55,11 +55,10 @@ class MyApp : QuarkusApplication {
         val liqudityMiningRewards = byType.getOrDefault(LIQUIDITY_MINING_REWARD_BTC_DFI, emptyList())
         val otherEntries = table - freezerRewards - stakingRewards - liqudityMiningRewards - freezer10Rewards
 
-
         val csvLines = (processStaking(freezer10Rewards + freezerRewards + stakingRewards) + processLiquidtyMining(
             liqudityMiningRewards
         ) + otherEntries)
-            .sortedBy { it.date }
+            .sortedByDescending { it.date }
             .map { it.toCsv() }
 
 
